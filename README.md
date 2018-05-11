@@ -1,2 +1,4 @@
-# rsaEncryptBase64
-rsaEncryptBase64
+# JavaScript RSA Encryption
+JavaScript RSA Encryption
+
+https://github.com/travist/jsencrypt
