@@ -1,5 +1,7 @@
 # JavaScript RSA Encryption
 JavaScript RSA Encryption
+加密
+https://github.com/travist/jsencrypt
 
-https://github.com/travist/jsencrypt加密
-https://github.com/nodeca/pako压缩
+压缩
+https://github.com/nodeca/pako
