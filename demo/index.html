@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <title>JavaScript RSA Encryption</title>
+    <script type="text/javascript" src="./js/jquery-1.9.0.js" ></script>
+	<script type="text/javascript" src="./js/jsencrypt.min.js"></script>
+	<script type="text/javascript" src="./js/pako.min.js"></script>
+	<script type="text/javascript" src="./js/base64.min.js"></script>
+    <script type="text/javascript">
+		//加密		
+		var pbk='MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAylJ6pyOuAEWMwv7NOpECzc/3uBZO4QaZ5BMbJQMEVKXFkgWvzOd2aBz65z70/679joELF/YamKHxPazpPrWz1za5hEpjm/6YOxlKHhAyMkcHaqeTZT8fP9gI6nBEyUB6glkXhNlcHxBttXpZn3B628VeGovpsWzV6DbLYIgTAvN1kU1INnNzYhAYzXORkwS1wGYFOSc26v5hiMO3KjnHudpqD7JYgDGU85nSD82z9FHFDJctDpUro65LjwGEO2EAl1zcWPdUImFbJ2ojyh1kpSgG6qjKIxLa8kxOx+9DtvMBkL07zebP9m8a7CKDkTd2qOoio4emX1xTFj/f91DuiQIDAQAB'
+		var ect = new JSEncrypt();
+		ect.setPublicKey(pbk);	
+		//加密数据
+		var data={
+			name:"nickro"
+		}
+		var ectStr=ect.encrypt(JSON.stringify(data));
+		var rsaStr = zip(ectStr);//加密成功的数据
+		var ectData={encodeString:rsaStr}
+		
+		console.log('rsaStr:'+rsaStr)
+		
+		//压缩
+		function zip(str){
+			var binaryString = pako.gzip(str, { to: 'string' });
+			return btoa(binaryString);
+		}
+    </script>
+  </head>
+  <body>
+    
+  </body>
+</html>

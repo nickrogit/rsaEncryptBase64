@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <title>JavaScript RSA Encryption</title>
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+	<script src="bin/jsencrypt.min.js"></script>
+    <script src="bin/pako.min.js"></script>
+    <script type="text/javascript">	
+    </script>
+  </head>
+  <body>
+	<a href="javascript:rsa();">加密</a><br/><br/>
+	<a href="javascript:unRsa();">解密</a>
+    <script>
+		var b64Data     = 'H4sIAAAAAAAAAJ3UMQ7CMAwF0KugP2ewEzdpcxXUAbWAOiHUMqCqdyeVQAobfGXIYL8hP5ZXnEdkeNEk6vUgXTbLonC4zMjHFY/5Wm511ekdTsOCLKVp2rlIKOA2jTuBot/cr7BhobEwsbAloY8kDGyqoQ5H/oHsdwQ21cCmaspCz0L2jcYOgLHhNGw4TT1yVmBpuS9PZHWY35siqnxvimEvpE9FY4peQhfbhO0FDnuFqWAEAAA=';  
+		var ticketData = '{"ed":"20170121 09:44:01","fs":[{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"003","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"005","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"004","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"007","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"008","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"026","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"033","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"034","oids":["0"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"035","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"037","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"038","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"041","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"042","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"047","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"046","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"048","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"051","oids":["1"]},{"usg":[1,1,1,1,1,1,1],"act":0,"fid":"053","oids":["4"]}],"qty":1,"sd":"20161021 09:44:01","cd":"72016102116762039687"}';  
+		// Output to console  
+		 
+		
+		//加密
+		var prk='MIICXQIBAAKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQABAoGAfY9LpnuWK5Bs50UVep5c93SJdUi82u7yMx4iHFMc/Z2hfenfYEzu+57fI4fvxTQ//5DbzRR/XKb8ulNv6+CHyPF31xk7YOBfkGI8qjLoq06V+FyBfDSwL8KbLyeHm7KUZnLNQbk8yGLzB3iYKkRHlmUanQGaNMIJziWOkN+N9dECQQD0ONYRNZeuM8zd8XJTSdcIX4a3gy3GGCJxOzv16XHxD03GW6UNLmfPwenKu+cdrQeaqEixrCejXdAFz/7+BSMpAkEA8EaSOeP5Xr3ZrbiKzi6TGMwHMvC7HdJxaBJbVRfApFrE0/mPwmP5rN7QwjrMY+0+AbXcm8mRQyQ1+IGEembsdwJBAN6az8Rv7QnD/YBvi52POIlRSSIMV7SwWvSK4WSMnGb1ZBbhgdg57DXaspcwHsFV7hByQ5BvMtIduHcT14ECfcECQATeaTgjFnqE/lQ22Rk0eGaYO80cc643BXVGafNfd9fcvwBMnk0iGX0XRsOozVt5AzilpsLBYuApa66NcVHJpCECQQDTjI2AQhFc1yRnCU/YgDnSpJVm1nASoRUnU8Jfm3Ozuku7JUXcVpt08DFSceCEX9unCuMcT72rAQlLpdZir876'
+		var pbk='MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAylJ6pyOuAEWMwv7NOpECzc/3uBZO4QaZ5BMbJQMEVKXFkgWvzOd2aBz65z70/679joELF/YamKHxPazpPrWz1za5hEpjm/6YOxlKHhAyMkcHaqeTZT8fP9gI6nBEyUB6glkXhNlcHxBttXpZn3B628VeGovpsWzV6DbLYIgTAvN1kU1INnNzYhAYzXORkwS1wGYFOSc26v5hiMO3KjnHudpqD7JYgDGU85nSD82z9FHFDJctDpUro65LjwGEO2EAl1zcWPdUImFbJ2ojyh1kpSgG6qjKIxLa8kxOx+9DtvMBkL07zebP9m8a7CKDkTd2qOoio4emX1xTFj/f91DuiQIDAQAB'
+		
+		var ect = new JSEncrypt();
+        ect.setPublicKey(pbk);
+		
+		var ectStr='',zipStr='';
+		
+		//加密
+		function rsa(){
+			var pData={
+				name:'nickro',
+				pwd:'a123456'
+			}
+			ectStr=ect.encrypt(JSON.stringify(pData));//加密
+			console.log("加密:"+ectStr);
+			
+			zipStr = zip(ectStr);//压缩base64
+			console.log("压缩:"+zipStr);
+		}
+		//解密
+		function unRsa(){
+			//解压base64
+			var s = unzip(zipStr);
+			console.log("解压:"+s);
+			//解密
+			var dct = new JSEncrypt();
+            dct.setPrivateKey(prk);
+            var dctStr = dct.decrypt(ectStr);
+			console.log("解密:"+dctStr);			
+		}
+		  
+		  
+		function unzip(b64Data){  
+			var strData     = atob(b64Data);  
+			  
+			// Convert binary string to character-number array  
+			var charData    = strData.split('').map(function(x){return x.charCodeAt(0);});  
+		  
+		  
+			// Turn number array into byte-array  
+			var binData     = new Uint8Array(charData);  
+		  
+		  
+			// // unzip  
+			var data        = pako.inflate(binData);  
+		  
+		  
+			// Convert gunzipped byteArray back to ascii string:  
+			strData     = String.fromCharCode.apply(null, new Uint16Array(data));  
+			return strData;  
+		}  
+		  
+		  
+		function zip(str){  
+			var binaryString = pako.gzip(str, { to: 'string' });  
+			  
+			return btoa(binaryString);  
+		}
+	</script>
+  </body>
+</html>
